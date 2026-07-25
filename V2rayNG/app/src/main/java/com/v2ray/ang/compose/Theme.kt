@@ -307,7 +307,7 @@ fun AppTheme(
             colorScheme = colorScheme,
             typography = MangaTypography          // ← added
         ) {
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = Modifier.fillMaxSize().paperGrainOverlay()) {
                 AppSnackbarBridge(controller = snackbarController)
                 content()
                 AppSnackbarHost(hostState = snackbarController.hostState)
