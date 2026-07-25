@@ -80,7 +80,7 @@ fun AppTopBar(
                         placeholder = searchPlaceholder
                     )
                 } else {
-                    Text(text = title)
+                    Text(text = title, style = MaterialTheme.typography.titleLarge)
                 }
             },
             navigationIcon = {
@@ -102,6 +102,12 @@ fun AppTopBar(
                 navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
                 actionIconContentColor = MaterialTheme.colorScheme.onSurface
             )
+        )
+        androidx.compose.foundation.layout.Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(3.dp)
+                .background(com.v2ray.ang.compose.InkBlack)
         )
         AnimatedVisibility(
             visible = isLoading,
