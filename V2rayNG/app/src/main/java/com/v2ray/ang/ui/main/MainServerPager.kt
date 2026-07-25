@@ -43,12 +43,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.v2ray.ang.R
+import com.v2ray.ang.compose.InkBlack
 import com.v2ray.ang.compose.ItemDivider
+import com.v2ray.ang.compose.MangaTokens
+import com.v2ray.ang.compose.PaperSurface
 import com.v2ray.ang.compose.ReorderableGridItem
 import com.v2ray.ang.compose.ReorderableListItem
+import com.v2ray.ang.compose.SpotRed
 import com.v2ray.ang.compose.colorConfigType
 import com.v2ray.ang.compose.colorPing
 import com.v2ray.ang.compose.colorPingRed
+import com.v2ray.ang.compose.handDrawnInkBorder
 import com.v2ray.ang.compose.verticalScrollbar
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.dto.entities.ServersCache
@@ -207,7 +212,6 @@ private fun ServerListPage(
                                 onRemoveServer = onRemoveServer
                             )
                         }
-                        ItemDivider()
                     }
                 } else {
                     ServerItemRow(
@@ -220,7 +224,6 @@ private fun ServerListPage(
                         onMoreServer = onMoreServer,
                         onRemoveServer = onRemoveServer
                     )
-                    ItemDivider()
                 }
             }
         }
@@ -294,7 +297,6 @@ private fun ServerItemColumn(
             onRemove = { onRemoveServer(serverCache.guid) },
             onMore = { onMoreServer(serverCache.guid, profile) }
         )
-        ItemDivider()
     }
 }
 
@@ -316,9 +318,19 @@ fun ServerListItem(
     modifier: Modifier = Modifier,
     dragModifier: Modifier = Modifier
 ) {
+    // ── MANGA PANEL WRAPPER ──────────────────────────────────────
+    // Each server is its own ink-bordered panel on paper, with a
+    // margin gutter between cards instead of a thin divider line.
+    // Selected server gets a thicker spot-color (red) contour.
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .padding(horizontal = 10.dp, vertical = 5.dp)
+            .background(if (isSelected) SpotRed.copy(alpha = 0.05f) else PaperSurface)
+            .handDrawnInkBorder(
+                strokeWidth = if (isSelected) MangaTokens.ContourThick else MangaTokens.Hairline,
+                color = if (isSelected) SpotRed else InkBlack
+            )
             .height(IntrinsicSize.Min)
             .clickable(onClick = onClick)
             .then(dragModifier)
@@ -336,7 +348,7 @@ fun ServerListItem(
                             .width(4.dp)
                             .fillMaxHeight()
                             .padding(vertical = 10.dp)
-                            .background(MaterialTheme.colorScheme.primary)
+                            .background(SpotRed)
                     )
                 }
             }
@@ -345,7 +357,7 @@ fun ServerListItem(
         Column(
             Modifier
                 .weight(1f)
-                .padding(start = 8.dp, end = 12.dp, top = 8.dp, bottom = 8.dp)
+                .padding(start = 8.dp, end = 12.dp, top = 10.dp, bottom = 10.dp)
         ) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(remarks, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge.copy(lineBreak = LineBreak.Paragraph), maxLines = 2, overflow = TextOverflow.Ellipsis)
