@@ -234,8 +234,13 @@ fun MainScreen(
         ) { innerPadding ->
             val layoutDirection = LocalLayoutDirection.current
 
-            if (groups.isNotEmpty()) {
-                Column(
+            androidx.compose.foundation.layout.Box(modifier = Modifier.fillMaxSize()) {
+                com.v2ray.ang.compose.MangaCityscapeBackground(
+                    modifier = Modifier.fillMaxSize()
+                )
+
+                if (groups.isNotEmpty()) {
+                    Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(innerPadding)
