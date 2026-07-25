@@ -1,6 +1,7 @@
 package com.v2ray.ang.compose
 
 import android.graphics.Bitmap
+import androidx.compose.foundation.background
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
